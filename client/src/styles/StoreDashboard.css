@@ -1,0 +1,202 @@
+/* Store Dashboard Layout */
+.store-dashboard-container {
+  display: flex;
+  flex-direction: row;
+  min-height: 100vh;
+  background-color: #f5f7fa;
+  margin-top: 10px;
+  position: relative;
+}
+
+/* Mobile Toggle Icon */
+.store-mobile-toggle {
+  display: none;
+  padding: 1rem;
+  background-color: #2c3e50;
+  color: white;
+  position: relative;
+  
+}
+
+.store-toggle-icon {
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+/* Sidebar */
+.store-dashboard-sidebar {
+  width: 250px;
+  background-color: #2c3e50;
+  color: white;
+  padding: 2rem 1rem;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 10px;
+  height: calc(100vh - 10px);
+  transition: all 0.3s ease;
+  
+}
+
+.store-dashboard-sidebar h2 {
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+/* Main Content */
+.store-dashboard-main {
+  flex: 1;
+  padding: 2rem;
+  background-color: #fff;
+}
+
+.store-dashboard-header {
+  font-size: 1.8rem;
+  margin-bottom: 2rem;
+  color: #2c3e50;
+  text-align: center;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #e0e6ed;
+}
+
+/* Navigation Menu */
+.store-nav-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.store-nav-item {
+  margin-bottom: 0.5rem;
+}
+
+.store-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0.75rem 1rem;
+  color: #ecf0f1;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  margin-top: 12px;
+  font-weight: 500;
+}
+
+.store-nav-link:hover {
+  background-color: #34495e;
+  color: #ffffff;
+  transform: translateX(5px);
+}
+
+.store-nav-link.active {
+  background-color: #20c997;
+  color: white;
+  animation: pulse 1.5s infinite;
+}
+
+/* Icon styling */
+.nav-icon {
+  font-size: 18px;
+}
+
+/* Pulse Animation */
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(32, 201, 151, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 8px rgba(32, 201, 151, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(32, 201, 151, 0);
+  }
+}
+
+/* ------------------- Responsive Styling ------------------- */
+@media (max-width: 768px) {
+  .store-dashboard-container {
+    flex-direction: column;
+  }
+
+  .store-mobile-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .store-dashboard-sidebar {
+    width: 100%;
+    height: auto;
+    position: absolute;
+    top: 58px; /* below the toggle */
+    left: 0;
+    z-index: 1;
+    background-color: #2c3e50;
+   display: none;
+  }
+
+  .store-dashboard-sidebar.open {
+    display: block;
+    animation: slideDown 0.3s ease-in-out;
+  }
+
+  .store-dashboard-sidebar.collapsed {
+    display: none;
+  }
+
+  .store-nav-menu {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 0;
+  }
+
+  .store-nav-item {
+    margin-bottom: 0;
+  }
+
+  .store-nav-link {
+    white-space: nowrap;
+    justify-content: flex-start;
+  }
+
+  .store-nav-link:hover {
+    transform: translateY(2px);
+  }
+
+  .store-dashboard-main {
+    padding: 1rem;
+  }
+
+  .store-dashboard-header {
+    font-size: 1.4rem;
+  }
+
+  @keyframes slideDown {
+    from {
+      transform: translateY(-20px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .store-dashboard-header {
+    font-size: 1.2rem;
+  }
+
+  .store-nav-link {
+    font-size: 0.9rem;
+  }
+
+  .store-dashboard-main {
+    padding: 0.8rem;
+  }
+
+  .store-dashboard-sidebar h2 {
+    font-size: 1.3rem;
+  }
+}

@@ -1,0 +1,72 @@
+@import "tailwindcss";
+
+/* Float animation */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg) scale(1);
+  }
+  50% {
+    transform: translateY(-10px) rotate(6deg) scale(1.05);
+  }
+}
+
+.animate-float {
+  animation: float 5s ease-in-out infinite;
+}
+
+/* SlideDown animation */
+@keyframes slideDown {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.5s ease-out;
+}
+
+
+.animate-slideDown {
+  animation: slideDown 0.3s ease-in-out forwards;
+}
+body {
+  font-family: "Inter", sans-serif;
+
+  background: linear-gradient(to bottom right, #e0f2fe, #fff7ed);
+}
+/* Navbar */
+.navbar {
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Global styles */
+body,
+#root {
+  height: 100%;
+}
+
+li {
+  list-style: none;
+}
