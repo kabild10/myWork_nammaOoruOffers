@@ -249,80 +249,89 @@ const Offers = () => {
             No matching coupons found.
           </p>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-3 gap-6">
+       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-[6px]">
+
             {filteredCoupons.map((c) => {
               const { text: daysLeft, color } = calculateDaysLeft(c.expiryDate);
               const expired = daysLeft === "Expired";
               return (
-                <div
-                  key={c._id}
-                  className="w-full rounded-2xl overflow-hidden shadow-lg bg-white hover:shadow-xl transition duration-300"
-                >
-                  {/* image */}
-                  <div className="relative">
-                    <img
-                      src={
-                        c.backgroundImage ||
-                        "https://images.unsplash.com/photo-1596797038530-2f2f47d192ad"
-                      }
-                      alt="Coupon"
-                      className="w-full h-40 object-cover"
-                    />
-                    {/* store logo */}
-                    <div className="absolute top-3 left-3 bg-white rounded-full p-1 shadow">
-                      <img
-                        src={
-                          c.store?.storeLogo || "https://via.placeholder.com/40"
-                        }
-                        alt="Logo"
-                        className="w-10 h-10 rounded-full"
-                        loading="lazy"
-                      />
-                    </div>
-                    {/* badge */}
-                    <span
-                      className={`absolute top-3 right-3 px-3 py-1 rounded-xl text-xs font-semibold ${color}`}
-                    >
-                      {daysLeft}
-                    </span>
-                  </div>
+           <div
+  key={c._id} 
+  className="bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition duration-300 overflow-hidden group w-full max-w-[260px] mx-auto my-4"
+>
+  {/* Image Section */}
+ <div className="relative overflow-hidden h-40">
+  <img
+    src={c.backgroundImage || "https://via.placeholder.com/400"}
+    alt={c.title}
+    className="w-full h-full object-cover transform transition-transform duration-500 group-hover:scale-105"
+    loading="lazy"
+  />
 
-                  {/* details */}
-                  <div className="p-4 bg-gray-50">
-                    <h3 className="text-[1rem] font-semibold text-gray-800 flex items-center gap-2 text-center sm:text-left">
-                      <FaTags className="text-[#396eb2]" /> {c.title}
-                    </h3>
+    {/* Store Logo - Top Left */}
+    <div className="absolute top-2 left-2 bg-white rounded-full p-1 shadow">
+      <img
+        src={c.store?.storeLogo || "https://via.placeholder.com/40"}
+        alt="Logo"
+        className="w-8 h-8 rounded-full object-cover"
+        loading="lazy"
+      />
+    </div>
 
-                    {(c.categories || []).map((cat) => (
-                      <p
-                        key={cat}
-                        className="text-[0.85rem] text-gray-600 flex items-center gap-2 mt-1 justify-start"
-                      >
-                        <BiSolidCategory className="text-[#396eb2]" /> {cat}
-                      </p>
-                    ))}
+    {/* Days Left Badge - Top Right */}
+    <span
+      className={`absolute top-2 right-2 px-2 py-1 rounded-full text-[10px] font-semibold ${calculateDaysLeft(c.expiryDate).color}`}
+    >
+      {calculateDaysLeft(c.expiryDate).text}
+    </span>
+  </div>
 
-                    <p className="text-[0.85rem] text-gray-600 flex items-center gap-2 mt-1 justify-start">
-                      <FaMapMarkerAlt className="text-[#396eb2]" />{" "}
-                      {c.store?.storeCity}
-                    </p>
+ {/* Coupon Info */}
+<div className="px-4 pt-3 pb-2 text-center">
+  {/* Title */}
+  <h2 className="text-sm font-semibold text-gray-800 truncate">
+    {c.title}
+  </h2>
 
-                    {/* CTA */}
-                    <div className="mt-4">
-                      <Link
-                        to={`/offersdetails/${c._id}`}
-                        className={`block w-full text-center py-2 rounded-lg font-medium text-white transition-all duration-300
-                          ${
-                            expired
-                              ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-                              : "bg-blue-600 text-white hover:bg-blue-700"
-                          }`}
-                      >
-                        {expired ? "Expired" : "VIEW COUPON →"}
-                      </Link>
-                    </div>
-                  </div>
-                </div>
+  {/* Category + City Badges */}
+  <div className="flex justify-center items-center gap-2 mt-2 flex-wrap text-xs font-medium">
+    {/* Category Badge */}
+    {(c.categories || []).length > 0 && (
+      <span className="bg-[#e6f4fa] text-[#0075be] px-2 py-[2px] rounded-full">
+        {c.categories[0]}
+      </span>
+    )}
+
+    {/* City Badge */}
+    {c.store?.storeCity && (
+      <span className="bg-gray-100 text-gray-600 px-2 py-[2px] rounded-full">
+        {c.store.storeCity}
+      </span>
+    )}
+  </div>
+</div>
+
+
+  {/* View Coupon Button */}
+  <div className="px-4 pb-4">
+   <Link
+  to={`/offersdetails/${c._id}`}
+  className={`block w-full text-center px-4 py-2 text-sm font-bold rounded-lg 
+    ${
+      calculateDaysLeft(c.expiryDate).text === "Expired"
+        ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+        : "bg-[#0075be] text-white hover:bg-white hover:text-[#0075be] hover:border hover:border-[#0075be]"
+    } transition duration-200`}
+>
+  {calculateDaysLeft(c.expiryDate).text === "Expired"
+    ? "EXPIRED"
+    : "VIEW COUPON"}
+</Link>
+
+  </div>
+</div>
+
+
               );
             })}
           </div>
