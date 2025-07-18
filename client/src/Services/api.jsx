@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const BASEURL =
-  "https://mywork-nammaooruoffers-server.onrender.com/api/";
+  "https://mywork-nammaooruoffers-server.onrender.com/api/"
   // "http:///localhost:5000/api";
 
 const api = axios.create({
