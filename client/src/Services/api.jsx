@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const BASEURL = "http://localhost:5000/api/"  
+export const BASEURL = "https://mywork-nammaooruoffers-server.onrender.com/api/"  || "http:///localhost:5173"
 
 const api = axios.create({
   baseURL: BASEURL, // ✅ Correct usage without {}

@@ -14,7 +14,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://nammaooroffers-1-ouei.onrender.com",
+  "https://mywork-nammaooruoffers.onrender.com",
 ];
 
 app.use(

@@ -29,62 +29,59 @@ const Stores = () => {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      {/* ✅ Show 1, 2, 3, or 4 cards per row depending on screen size */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {loading
           ? Array(6)
               .fill(0)
               .map((_, idx) => <SkeletonCard key={idx} />)
           : stores?.length > 0 ? (
               stores.map((store) => (
-     <div
-  key={store._id}
-  className="bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md transition duration-300 overflow-hidden group"
->
-  {/* Image with Zoom + Badges */}
-  <div className="relative overflow-hidden">
-    <img
-      src={store.storeLogo || "https://via.placeholder.com/400x300"}
-      alt={store.storeName}
-      className="w-full h-48 object-cover transform transition-transform duration-500 group-hover:scale-105"
-      loading="lazy"
-    />
-    
-    {/* New Badge - Top Left */}
-    <span className="absolute top-2 left-2 bg-[#0075be] text-white text-xs font-semibold px-2 py-1 rounded-full shadow">
-      New
-    </span>
+                <div
+                  key={store._id}
+                  className="bg-white border border-gray-300 rounded-2xl shadow-sm hover:shadow-md transition duration-300 overflow-hidden group"
+                >
+                  {/* Image with Zoom + Badges */}
+                  <div className="relative overflow-hidden aspect-square">
+                    <img
+                      src={store.storeLogo || "https://via.placeholder.com/400"}
+                      alt={store.storeName}
+                      className="w-full h-full object-cover transform transition-transform shadow-amber-50   duration-500 group-hover:scale-105"
+                      loading="lazy"
+                    />
 
-    {/* Rating Badge - Top Right */}
-    <div className="absolute top-2 right-2 bg-white text-gray-800 text-xs font-semibold px-2 py-1 rounded-full shadow flex items-center gap-1">
-      <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
-        <path d="M10 15l-5.878 3.09 1.122-6.545L.488 6.91l6.562-.954L10 0l2.95 5.956 6.562.954-4.756 4.635 1.122 6.545z" />
-      </svg>
-      <span>{store.rating || "4.5"}</span>
-    </div>
-  </div>
+                    {/* New Badge - Top Left */}
+                    <span className="absolute top-2 left-2 bg-[#0075be] text-white text-[10px] font-semibold px-2 py-[2px] rounded-full shadow">
+                      New
+                    </span>
 
-  {/* Store Info */}
-  <div className="p-4 text-center">
-    <h2 className="text-lg font-semibold text-gray-800">{store.storeName}</h2>
-    <p className="text-sm text-gray-500">{store.storeCity}</p>
-    <p className="text-sm text-[#0075be] mt-1 font-medium">
-      {store.tagline || "Flat 30% Off on Your First Order"}
-    </p>
-  </div>
+                    {/* Rating Badge - Top Right */}
+                    <div className="absolute top-2 right-2 bg-white text-gray-800 text-[10px] font-semibold px-2 py-[2px] rounded-full shadow flex items-center gap-1">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M10 15l-5.878 3.09 1.122-6.545L.488 6.91l6.562-.954L10 0l2.95 5.956 6.562.954-4.756 4.635 1.122 6.545z" />
+                      </svg>
+                      <span>{store.rating || "4.5"}</span>
+                    </div>
+                  </div>
 
-  {/* View Store Button */}
-  <div className="px-4 pb-4 mt-2">
-    <Link
-      to={`/store/${store._id}`}
-      className="block w-full text-center px-5 py-2 text-sm font-medium rounded-lg 
-               bg-[#0075be] text-white transition-colors duration-200 
-               hover:bg-white hover:text-[#0075be] hover:border hover:border-[#0075be]"
-    >
-      View Store
-    </Link>
-  </div>
-</div>
+                  {/* Store Info */}
+                  <div className="px-3 pt-2 pb-1 text-center">
+                    <h2 className="text-sm font-semibold text-gray-800 truncate">{store.storeName}</h2>
+                    <p className="text-xs text-gray-500">{store.storeCity}</p>
+                   
+                  </div>
 
+                  {/* View Store Button */}
+                  <div className="px-3 pb-3 mt-1">
+                   <Link
+  to={`/store/${store._id}`}
+  className="block w-full text-center px-5 py-3 text-sm font-bold rounded-lg 
+           bg-[#0075be] text-white transition-colors duration-200 
+           hover:bg-white hover:text-[#0075be] hover:border hover:border-[#0075be]">
+  VIEW STORE
+</Link>
+                  </div>
+                </div>
               ))
             ) : (
               <div className="col-span-full text-center text-gray-500 py-12">
