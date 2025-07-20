@@ -126,114 +126,155 @@ const OffersDetails = () => {
   if (error)
     return <div className="text-center py-8 text-red-600">Error: {error}</div>;
 
-  return (
-    <>
-      <Helmet>
-        <title>
-          {coupon?.title} | {coupon?.store?.storeName} - Namma Ooru Offers
-        </title>
-      </Helmet>
+return (
+  <>
+    <Helmet>
+      <title>
+        {coupon?.title} | {coupon?.store?.storeName} - Namma Ooru Offers
+      </title>
+      <meta
+        name="description"
+        content={coupon?.description || "Check out this amazing offer!"}
+      />
+    </Helmet>
 
-      <div className="relative max-w-6xl mx-auto px-6 py-10 mt-8 bg-white shadow-[0_0_1px_1px_#00000024] rounded-xl">
-        <div className={`absolute top-6 right-6 text-sm px-3 py-1 rounded-full ${daysInfo.color}`}>
-          {daysInfo.text}
-        </div>
+    <div className="relative max-w-5xl mx-auto px-6 py-12 mt-10 bg-white shadow-md rounded-2xl border border-gray-200">
+      {/* Offer Badge */}
+      <div
+        className={`absolute top-6 right-6 text-xs px-3 py-1 rounded-full font-medium ${daysInfo.color}`}
+      >
+        {daysInfo.text}
+      </div>
 
-        <h2 className="text-3xl font-bold text-center text-gray-800 mt-8 mb-4">
-          {coupon?.title}
-        </h2>
-        <p className="text-center text-gray-600 text-base mb-6">
-          {coupon?.description}
-        </p>
+      {/* Title & Description */}
+      <h2 className="text-3xl font-bold text-center text-gray-800 mb-3 leading-tight">
+        {coupon?.title}
+      </h2>
+      <p className="text-center text-gray-500 text-base max-w-xl mx-auto mb-8">
+        {coupon?.description}
+      </p>
 
-        <div
-          className={`p-6 rounded-lg text-center mb-6 ${
-            isExpired ? "bg-red-50" : "bg-blue-50"
-          }`}
-        >
-          {showCode ? (
-            <div className="space-y-3 flex flex-col justify-center items-center">
-              <p className="text-2xl font-mono font-bold text-green-600 bg-green-100 px-4 py-2 rounded inline-block tracking-widest">
-                {coupon?.redemptionCode}
-              </p>
-              <button
-                onClick={copyToClipboard}
-                className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-full text-sm font-medium"
-              >
-                Copy Code
-              </button>
-              {alreadyRedeemed && (
-                <p className="text-sm text-gray-600">
-                  You already redeemed this offer.
-                </p>
-              )}
-            </div>
-          ) : (
-            <div className="space-y-3">
-              <p className="text-2xl tracking-widest text-gray-400">
-                •••• •••• ••••
-              </p>
-              <button
-                onClick={handleRedeem}
-                disabled={isExpired}
-                className={`px-6 py-2 text-white font-semibold rounded-full ${
-                  isExpired
-                    ? "bg-gray-400 cursor-not-allowed"
-                    : "bg-green-600 hover:bg-green-700"
-                }`}
-              >
-                {isExpired ? "Offer Expired" : "Redeem Code"}
-              </button>
-            </div>
-          )}
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="bg-gray-100 p-4 rounded-lg">
-            <h3 className="text-lg font-semibold text-gray-800 mb-2">
-              Store Info
-            </h3>
-            <p className="text-gray-700 text-sm mb-1">
-              <strong>Name:</strong> {coupon?.store?.storeName}
+      {/* Coupon Code Card */}
+      <div
+        className={`p-6 rounded-xl text-center mb-10 border ${
+          isExpired ? "bg-red-50 border-red-200" : "bg-blue-50 border-blue-200"
+        }`}
+      >
+        {showCode ? (
+          <div className="space-y-4 flex flex-col items-center">
+            <p className="text-2xl font-mono font-bold text-blue-700 bg-blue-100 border border-black px-6 py-2 rounded-lg tracking-widest shadow-sm">
+              {coupon?.redemptionCode}
             </p>
-            <p className="text-gray-700 text-sm mb-1">
-              <strong>City:</strong> {coupon?.store?.storeCity}
-            </p>
-            <p className="text-gray-700 text-sm">
-              <strong>Website:</strong>{" "}
-              <a
-                href={coupon?.store?.storeWebsite || "#"}
-                className="text-black-600 "
-              >
-                {coupon.store?.storeName || "No Website"}
-              </a>
-            </p>
-          </div>
 
-          <div className="bg-gray-50 p-4 rounded-lg">
-            <h3 className="text-lg font-semibold text-gray-800 mb-2">
-              Terms & Conditions
-            </h3>
-            <ul className="list-disc list-inside text-sm text-gray-700 space-y-1">
-              {Array.isArray(coupon?.terms) && coupon.terms.length > 0 ? (
-                coupon.terms.map((term, i) => <li key={i}>{term}</li>)
-              ) : (
-                <li>No terms provided.</li>
-              )}
-            </ul>
-          </div>
-        </div>
-
-        <div className="text-center mt-8">
-          <Link to="/offers">
-            <button className="bg-gray-200 hover:bg-gray-300 text-gray-700 px-5 py-2 rounded-full text-sm font-medium">
-              ← Back to All Offers
+            <button
+              onClick={copyToClipboard}
+              className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-full text-sm font-semibold shadow-md transition-all duration-300"
+            >
+              Copy Code
             </button>
-          </Link>
+
+            {/* Share Button */}
+            {navigator.share && (
+              <button
+                onClick={() =>
+                  navigator.share({
+                    title: coupon?.title,
+                    text: `Check out this offer from ${coupon?.store?.storeName}!`,
+                    url: window.location.href,
+                  })
+                }
+                className="bg-black text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-gray-800 transition"
+              >
+                Share This Offer
+              </button>
+            )}
+
+            {alreadyRedeemed && (
+              <p className="text-sm text-gray-600">You already redeemed this offer.</p>
+            )}
+          </div>
+        ) : (
+          <div className="space-y-4">
+            <p className="text-3xl tracking-widest text-gray-300 font-mono">
+              •••• •••• ••••
+            </p>
+            <button
+              onClick={handleRedeem}
+              disabled={isExpired}
+              className={`px-8 py-2 text-white font-semibold rounded-full shadow-md transition-all duration-300 ${
+                isExpired
+                  ? "bg-red-600 cursor-not-allowed"
+                  : "bg-green-600 hover:bg-green-700 transform hover:scale-105"
+              }`}
+            >
+              {isExpired ? "Offer Expired" : "Redeem Code"}
+            </button>
+          </div>
+        )}
+      </div>
+
+      {/* Store Info & Terms */}
+      <div className="grid md:grid-cols-2 gap-8 mb-10">
+        {/* Store Info */}
+        <div className="bg-blue-50 p-6 rounded-xl border border-blue-200 shadow-md hover:scale-[1.02] transition-all duration-300 ease-in-out">
+          <h3 className="text-lg font-semibold text-blue-800 mb-4">Store Info</h3>
+
+          {/* Optional store logo */}
+          <div className="flex justify-center mb-4">
+            <img
+              src={coupon?.store?.storeLogo || "/default-store.png"}
+              alt="Store Logo"
+              className="w-14 h-14 rounded-full object-cover"
+            />
+          </div>
+
+          <p className="text-blue-900 text-sm mb-2">
+            <strong>Name:</strong> {coupon?.store?.storeName}
+          </p>
+          <p className="text-blue-900 text-sm mb-2">
+            <strong>City:</strong> {coupon?.store?.storeCity}
+          </p>
+          <p className="text-blue-900 text-sm">
+            <strong>Website:</strong>{" "}
+            <a
+              href={coupon?.store?.storeWebsite || "#"}
+              className="text-blue-600 underline"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {coupon.store?.storeName || "No Website"}
+            </a>
+          </p>
+        </div>
+
+        {/* Terms & Conditions */}
+        <div className="bg-yellow-50 p-6 rounded-xl border border-yellow-200 shadow-md hover:scale-[1.02] transition-all duration-300 ease-in-out">
+          <h3 className="text-lg font-semibold text-yellow-800 mb-4 uppercase tracking-widest">
+            Terms & Conditions
+          </h3>
+          <ul className="list-disc list-inside text-sm text-yellow-900 space-y-2">
+            {Array.isArray(coupon?.terms) && coupon.terms.length > 0 ? (
+              coupon.terms.map((term, i) => <li key={i}>{term}</li>)
+            ) : (
+              <li>No terms provided.</li>
+            )}
+          </ul>
         </div>
       </div>
-    </>
-  );
+
+      {/* Back Button */}
+      <div className="text-center">
+        <Link to="/offers">
+          <button className="bg-gray-200 hover:bg-gray-300 text-gray-700 px-6 py-2 rounded-full text-sm font-medium shadow transition-all">
+            ← Back to All Offers
+          </button>
+        </Link>
+      </div>
+    </div>
+  </>
+);
+
+
 };
 
 export default OffersDetails;
